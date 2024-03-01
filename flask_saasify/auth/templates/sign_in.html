@@ -1,0 +1,36 @@
+{% extends 'saasify_base.html' %}
+{% block content %}
+<style>
+    html,
+    body {
+        height: 100%;
+    }
+
+    .min-100 {
+        min-height: 100%;
+    }
+</style>
+<div class="min-100" style="display: flex; align-items: center;">
+    <div class="container text-center" style="max-width: 350px">
+        <div>
+            <h1 class=" small pt-2 text-muted">Sign in (or sign up)</h1>
+            <form class="form" method="POST" enctype="multipart/form-data" action="{{ url_for('saasify_auth.sign_in') }}">
+                <div class="form-group">
+                    {{ form.hidden_tag() }}
+                    <div class="form-floating mb-2">
+                        {{ form.email(size=20, class="form-control", placeholder="koen@koen.com",
+                        autofocus="autofocus",
+                        autocomplete="off") }}
+                        {{ form.email.label }}
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 btn-lg "
+                        onclick='this.innerHTML="<i class=\"bi bi-hourglass\"></i>"'><i class="bi bi-key"></i></button>
+                </div>
+            </form>
+            <p style="font-size: 0.75em;" class="text-muted small mt-4">By clicking the button above you agree
+                with
+                the <a href="#">EULA</a>.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

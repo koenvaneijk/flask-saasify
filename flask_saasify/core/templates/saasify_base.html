@@ -1,0 +1,43 @@
+{% import 'saasify_macros.html' as saasify %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Main SEO Tags -->
+    <title>{% block title %}Your Page Title Here{% endblock %}</title>
+    <meta name="description" content="{% block description %}A brief description of your page's content.{% endblock %}">
+    <meta name="keywords" content="{% block keywords %}keyword1, keyword2, keyword3{% endblock %}">
+
+    <!-- Charset and Viewport for Responsive Design -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:url" content="{% block og_url %}{{ request.url }}{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}Your Page Title Here{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}A brief description of your page's content.{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}https://www.yourwebsite.com/path/to/image.jpg{% endblock %}">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="{% block twitter_card %}summary_large_image{% endblock %}">
+    <meta name="twitter:url" content="{% block twitter_url %}{{ request.url }}{% endblock %}">
+    <meta name="twitter:title" content="{% block twitter_title %}Your Page Title Here{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}A brief description of your page's content.{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}https://www.yourwebsite.com/path/to/image.jpg{% endblock %}">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+    {% block content %}
+    {% endblock %}
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+</body>
+</html>

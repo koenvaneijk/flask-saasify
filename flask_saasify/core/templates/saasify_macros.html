@@ -1,0 +1,160 @@
+
+
+{% macro form_field(field, label=None, placeholder=None, type='text') %}
+<div class="form-group">
+    {{ field.label(class_="control-label") if label is None else label }}
+    {{ field(class_="form-control", placeholder=placeholder if placeholder is not None else field.label.text, type=type) }}
+    {% if field.errors %}
+        <ul class="errors">
+        {% for error in field.errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+{% endmacro %}
+
+{% macro render_pagination(page) %}
+<nav aria-label="Page navigation">
+  <ul class="pagination">
+    {% if page.has_prev %}
+    <li class="page-item"><a class="page-link" href="?page={{ page.prev_num }}">Previous</a></li>
+    {% else %}
+    <li class="page-item disabled"><span class="page-link">Previous</span></li>
+    {% endif %}
+    {% for num in page.iter_pages() %}
+      {% if num %}
+        {% if num != page.page %}
+        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+        {% else %}
+        <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+        {% endif %}
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">…</span></li>
+      {% endif %}
+    {% endfor %}
+    {% if page.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{ page.next_num }}">Next</a></li>
+    {% else %}
+    <li class="page-item disabled"><span class="page-link">Next</span></li>
+    {% endif %}
+  </ul>
+</nav>
+{% endmacro %}
+
+{% macro flash_messages(messages) %}
+{% for category, message in messages %}
+<div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+  {{ message }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+{% endmacro %}
+
+
+{% macro breadcrumbs(paths) %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    {% for path in paths %}
+      {% if loop.last %}
+      <li class="breadcrumb-item active" aria-current="page">{{ path.name }}</li>
+      {% else %}
+      <li class="breadcrumb-item"><a href="{{ path.url }}">{{ path.name }}</a></li>
+      {% endif %}
+    {% endfor %}
+  </ol>
+</nav>
+{% endmacro %}
+
+{% macro table_generator(items, headers) %}
+<table class="table">
+  <thead>
+    <tr>
+      {% for header in headers %}
+      <th>{{ header }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items %}
+    <tr>
+      {% for field in headers %}
+      <td>{{ item[field] }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endmacro %}
+
+{% macro dynamic_form(form_spec) %}
+<form method="{{ form_spec.method }}" action="{{ form_spec.action }}">
+    {% for field in form_spec.fields %}
+        {{ macros.form_field(field) }}
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">{{ form_spec.submit_text }}</button>
+</form>
+{% endmacro %}
+
+{% macro modal_dialog(id, title, body, footer) %}
+<div class="modal fade" id="{{ id }}" tabindex="-1" aria-labelledby="{{ id }}Label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="{{ id }}Label">{{ title }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {{ body }}
+      </div>
+      <div class="modal-footer">
+        {{ footer }}
+      </div>
+    </div>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro chart(chart_id, chart_type, chart_data) %}
+<canvas id="{{ chart_id }}"></canvas>
+<script>
+var ctx = document.getElementById('{{ chart_id }}').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: '{{ chart_type }}',
+    data: {{ chart_data|tojson }},
+    options: { ... }
+});
+</script>
+{% endmacro %}
+
+
+{% macro card(title, body, footer=None) %}
+<div class="card">
+  <div class="card-header">
+    {{ title }}
+  </div>
+  <div class="card-body">
+    {{ body }}
+  </div>
+  {% if footer %}
+  <div class="card-footer">
+    {{ footer }}
+  </div>
+  {% endif %}
+</div>
+{% endmacro %}
+
+{% macro alert(message, category="primary", dismissible=True) %}
+<div class="alert alert-{{ category }}{{ ' alert-dismissible fade show' if dismissible else '' }}" role="alert">
+  {{ message }}
+  {% if dismissible %}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  {% endif %}
+</div>
+{% endmacro %}
