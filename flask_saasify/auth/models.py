@@ -1,9 +1,7 @@
 import os
 
 from flask_login import UserMixin
-
 from flask_saasify import db, login_manager
-
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -21,6 +19,8 @@ class User(db.Model, UserMixin):
         else:
             return "user"
 
+    def is_admin(self):
+        return self.role == "admin"
 
 @login_manager.user_loader
 def load_user(user_id):
