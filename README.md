@@ -64,3 +64,9 @@ if __name__ == '__main__':
 
 ## License
 AGPL-3.0, need a different license? Please [e-mail](mailto:vaneijk.koen@gmail.com) me.
+
+## Publish to PyPi
+```
+python3 setup.py sdist bdist_wheel
+twine upload dist/*
+```
