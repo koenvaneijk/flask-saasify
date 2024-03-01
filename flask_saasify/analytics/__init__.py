@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from flask import Blueprint, g, request, session
+from flask_login import current_user
 
 from flask_saasify import db
 
@@ -13,7 +14,7 @@ analytics_bp = Blueprint("saasify_analytics", __name__)
 def before_request():
     g.request_start_time = datetime.utcnow()
     g.event = Event(
-        user_id=session.get("user_id", "anonymous"),
+        user_id=current_user.id if current_user.is_authenticated else None,
         session_id=request.cookies.get(
             "session_id", None
         ),  # Assuming session ID is stored in cookies

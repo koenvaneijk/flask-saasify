@@ -44,7 +44,7 @@ Provides a simple way to create a SaaS application with Python and Flask. It inc
 ## Example
 ```python
 from flask import Flask
-from saasify import Saasify, login_required
+from flask_saasify import Saasify, login_required
 
 app = Flask(__name__)
 saasify = Saasify(app)

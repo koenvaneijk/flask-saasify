@@ -21,6 +21,7 @@ def is_safe_url(target):
 @auth_bp.route("/", methods=["GET", "POST"])
 def sign_in():
     next_url = request.args.get("next", "/")
+    print(next_url)
 
     if request.method == "GET":
         token = request.args.get("token")
@@ -33,8 +34,8 @@ def sign_in():
                 db.session.commit()
                 flash("Succesfully signed in.", category="success")
 
-                if next and is_safe_url(next):
-                    return redirect(next)
+                if next_url and is_safe_url(next_url):
+                    return redirect(next_url)
                 else:
                     return redirect("/")
             else:
@@ -67,7 +68,7 @@ def sign_in():
         db.session.commit()
 
         # Send link
-        encoded_next_url = quote(next_url)
+        encoded_next_url = quote(form.next_url.data)
         base_url = os.environ["EXTERNAL_BASE_URL"]
         url = f"{base_url}/auth?token={user.secret_token}&next={encoded_next_url}"
 
@@ -80,6 +81,8 @@ def sign_in():
         flash(f"Magic link sent to {user.email}! 🪄")
 
         return render_template("check_mail.html")
+    
+    form.next_url.data = next_url
     return render_template("sign_in.html", form=form)
 
 

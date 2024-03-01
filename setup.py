@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="Flask-SaaSify",
-    version="0.0.1",
+    version="0.0.4",
     author="Koen van Eijk",
     author_email="vaneijk.koen@gmail.com",
     description="A Flask toolbox for rapidly building SaaS applications.",
