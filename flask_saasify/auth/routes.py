@@ -11,8 +11,9 @@ from . import auth_bp
 from .forms import LoginForm
 from .models import User
 
-
 def is_safe_url(target):
+    if not isinstance(target, str):
+        target = str(target)
     ref_url = urlparse(request.host_url)
     test_url = urlparse(urljoin(request.host_url, target))
     return test_url.scheme in ("http", "https") and ref_url.netloc == test_url.netloc
