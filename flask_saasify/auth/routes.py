@@ -11,6 +11,9 @@ from . import auth_bp
 from .forms import LoginForm
 from .models import User
 
+from flask_saasify.emailing import send_email
+
+
 def is_safe_url(target):
     if not isinstance(target, str):
         target = str(target)
@@ -22,7 +25,6 @@ def is_safe_url(target):
 @auth_bp.route("/", methods=["GET", "POST"])
 def sign_in():
     next_url = request.args.get("next", "/")
-    print(next_url)
 
     if request.method == "GET":
         token = request.args.get("token")
@@ -56,12 +58,13 @@ def sign_in():
             db.session.add(user)
             db.session.commit()
 
-            print(
+            email_html = render_template("email_thank_you.html")
+
+            send_email(
+                email_html,
                 user.email,
                 "Thank you for signing up! 👏",
-                "emails/thank_you.html",
-                {"message": "Thank you for signing up for AppEase!"},
-            )  # TODO: Send email
+            )
 
             flash("Thank you for signing up! 👏")
 
@@ -73,16 +76,20 @@ def sign_in():
         base_url = os.environ["EXTERNAL_BASE_URL"]
         url = f"{base_url}/auth?token={user.secret_token}&next={encoded_next_url}"
 
-        print(
+        email_html = render_template(
+            "email_magic_link.html",
+            magic_link=url,
+        )
+
+        send_email(
+            email_html,
             user.email,
-            "Your magic link! 🪄",
-            "emails/magic_link.html",
-            {"url": url},
-        )  # TODO: Send email
+            "Sign in to your account",
+        )
         flash(f"Magic link sent to {user.email}! 🪄")
 
         return render_template("check_mail.html")
-    
+
     form.next_url.data = next_url
     return render_template("sign_in.html", form=form)
 

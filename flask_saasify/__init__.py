@@ -5,6 +5,8 @@ from flask_login import LoginManager, login_required, current_user
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
+from .emailing import send_email
+
 db = SQLAlchemy()
 migrate = Migrate()
 login_manager = LoginManager()
@@ -15,11 +17,10 @@ class Saasify:
         self.app = app
 
         if app is not None:
-            self.init_app(app)
+            self.init_app(app)  
 
     def init_app(self, app):
         load_dotenv()
-
         app.config["SECRET_KEY"] = os.environ["SECRET_KEY"]
         app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DATABASE_URI"]
 
@@ -27,6 +28,7 @@ class Saasify:
         migrate.init_app(app, db)
         login_manager.init_app(app)
         login_manager.login_view = "saasify_auth.sign_in"
+        login_manager.login_message_category = "info"
 
         from flask_saasify.analytics import analytics_bp
 
@@ -47,6 +49,10 @@ class Saasify:
         from flask_saasify.admin import admin_bp
 
         app.register_blueprint(admin_bp, url_prefix="/admin")
+
+        from flask_saasify.subscription import subscription_bp
+
+        app.register_blueprint(subscription_bp, url_prefix="/subscription")
 
         with app.app_context():
             db.create_all()

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+
+<body
+    style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333333; margin: 0; padding: 0; background-color: #ffffff;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td align="center">
+                <table border="0" cellspacing="0" cellpadding="0" width="600" style="border-collapse: collapse;">
+                    <tr>
+                        <td style="background-color: #ffffff;">
+                            {% block content %}
+                            {% endblock %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #ffffff; text-align: center; font-size: 12px; color: #999999;">
+                            &copy; 2024 {{ meta.og_title }} All rights reserved.
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

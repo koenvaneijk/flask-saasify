@@ -1,0 +1,5 @@
+{% extends 'saasify_base.html' %}
+{% block content %}
+Current plan: {{ current_user.subscription.plan_id }}
+<a href="btn btn-danger" href="{{ url_for('subscription.cancel') }}">Cancel subscription</a>
+{% endblock %}
