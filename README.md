@@ -10,26 +10,21 @@ Provides a simple way to create a SaaS application with Python and Flask. It inc
     - Response times
 - Sign-up and login
     - Magic links
+- Progressive Web App
+- Subscriptions
+- Email
+    - SMTP
+    - E-mail templates
 
 ## Planned features
-- Progressive Web App
-- Blog
-    - Markdown
-    - Comments
 - Admin panel
     - Manage users
     - View analytics
 - Sign-up and login
     - Social login (Google, Facebook, X, GitHub)
 - Payments
-    - Subscriptions
     - Stripe Checkout API
     - Webhooks to update subscription status
-    - Pricing page
-- Email
-    - SendGrid?
-    - E-mail templates
-    - Drip campaigns
 - Landing pages
     - Landing page
     - Waitlist

@@ -22,3 +22,6 @@ def inject_meta_tags():
         "twitter_image": os.environ.get("META_TWITTER_DEFAULT_IMAGE"),
     }
     return {"meta": meta_tags}
+
+
+from . import routes
